@@ -4,12 +4,14 @@ using UnityEngine.InputSystem;
 public class PlayerInput : MonoBehaviour
 {
     PlayerMovement movement;
+    PlayerAnimator animator;
     PlayerBattle battle;
     public Vector2 axis;
     void Awake()
     {
         movement = GetComponent<PlayerMovement>();
         battle = GetComponent<PlayerBattle>();
+        animator = GetComponent<PlayerAnimator>();
     }
     public void OnMove(InputValue value)
     {
@@ -22,10 +24,12 @@ public class PlayerInput : MonoBehaviour
     }
     public void OnJump()
     {
-        movement.Jump();
+        if (movement.Jump())
+            animator.Jump();
     }
     public void OnAttack()
     {
         battle.Attack();
+        animator.Play("Attack1");
     }
 }
